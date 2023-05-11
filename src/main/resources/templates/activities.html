@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>
+        Activites Schedule
+    </title>
+
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <!--Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+
+    <style type="text/css">
+table, th, td {
+  border:none;
+  text-align: left;
+}
+tr{
+align:left
+}
+.btn-group{
+   position: fixed;
+    bottom: 0;
+    width: 100%;
+
+}
+.btn-group button {
+  background-color: #ffffff; /* White background */
+  border: 1px solid #000000; /* Green border */
+  color: #000000; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #f56d05;
+  color:#000000;
+}
+    </style>
+
+</head>
+
+<body>
+    
+    <h1 align="center">Tableau</h1>
+
+<table style="width:100%">
+  <tr>
+    <th>Mon activite</th>
+    <th>Date</th>
+    <th>Debut</th>
+    <th>Fin</th>
+    <th>Temps</th>
+	<th>Note</th>
+  </tr>
+  <tr>
+    <td>Action Jambe</td>
+    <td>20/04/2023</td>
+    <td>14:13</td>
+<td>14:13</td>
+<td>00:30</td>
+<td>***</td>
+  </tr>
+  <tr>
+    <td>Pompes</td>
+    <td>19/04/2023</td>
+    <td>14:13</td>
+<td>14:13</td>
+<td>00:30</td>
+<td>*****</td>
+  </tr>
+<tr>
+    <td>Assouplissement</td>
+    <td>18/04/2023</td>
+    <td>09:30</td>
+<td>10:30</td>
+<td>01:00</td>
+<td>**</td>
+  </tr>
+<tr>
+    <td>Changement postion</td>
+    <td>17/04/2023</td>
+    <td>07:00</td>
+<td>10:00</td>
+<td>03:00</td>
+<td>*****</td>
+  </tr>
+<tr>
+    <td>Echauffement genoux</td>
+    <td>16/04/2023</td>
+    <td>09:00</td>
+<td>10:10</td>
+<td>02:10</td>
+<td>**</td>
+  </tr>
+</table>
+<br><br>
+<br>
+<hr>
+<div>
+  <br> <h3 align="center">Graphe</h3><br>
+
+  <canvas id="myChart" style="width:100%;max-width:100%"></canvas>
+</div>
+    <br>
+   
+    <br>
+    <div class="btn-group" style="width:100%;z-index: 1000;">
+        <button type="button" onclick="window.location.href='/myevents'" style="width:33.3%">Mon agenda</button>
+        <button type="button" onclick="window.location.href='/activities'" style="width:33.3%">Mon activite</button>
+        <button type="button" onclick="window.location.href='/account'" style="width:33.3%">Mon compte</button>
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+    
+  const xValues = ['16/04/2023','17/04/2023','18/04/2023','19/04/2023','20/04/2023'];
+const yValues = [130,180,30,25,60];
+
+new Chart("myChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "#1e689f",
+      borderColor: "#1e689f",
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      yAxes: [{ticks: {min:0 , max:200}}],
+      xAxes: [{
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 45,
+                    minRotation: 45
+                }
+            }]
+    }
+  }
+});
+    </script>
+
+</body>
+
+</html>

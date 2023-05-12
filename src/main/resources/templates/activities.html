@@ -71,46 +71,15 @@ align:left
     <th>Temps</th>
 	<th>Note</th>
   </tr>
-  <tr>
-    <td>Action Jambe</td>
-    <td>20/04/2023</td>
-    <td>14:13</td>
-<td>14:13</td>
-<td>00:30</td>
+  <tr th:each="event : ${eventsJson}">
+    <td th:text="${event.title}"></td>
+    <td th:text="${event.dateWatched}"></td>
+    <td th:text="${event.eventTimeWatched}"></td>
+<td th:text="${event.eventFinishedTimeWatched}"></td>
+<td th:text="${event.secondsWatched}"></td>
 <td>***</td>
   </tr>
-  <tr>
-    <td>Pompes</td>
-    <td>19/04/2023</td>
-    <td>14:13</td>
-<td>14:13</td>
-<td>00:30</td>
-<td>*****</td>
-  </tr>
-<tr>
-    <td>Assouplissement</td>
-    <td>18/04/2023</td>
-    <td>09:30</td>
-<td>10:30</td>
-<td>01:00</td>
-<td>**</td>
-  </tr>
-<tr>
-    <td>Changement postion</td>
-    <td>17/04/2023</td>
-    <td>07:00</td>
-<td>10:00</td>
-<td>03:00</td>
-<td>*****</td>
-  </tr>
-<tr>
-    <td>Echauffement genoux</td>
-    <td>16/04/2023</td>
-    <td>09:00</td>
-<td>10:10</td>
-<td>02:10</td>
-<td>**</td>
-  </tr>
+
 </table>
 <br><br>
 <br>
@@ -124,9 +93,9 @@ align:left
    
     <br>
     <div class="btn-group" style="width:100%;z-index: 1000;">
-        <button type="button" onclick="window.location.href='/myevents'" style="width:33.3%">Mon agenda</button>
-        <button type="button" onclick="window.location.href='/activities'" style="width:33.3%">Mon activite</button>
-        <button type="button" onclick="window.location.href='/account'" style="width:33.3%">Mon compte</button>
+        <button type="button" onclick="window.location.href='/events/myevents'" style="width:33.3%">Mon agenda</button>
+        <button type="button" onclick="window.location.href='/events/activities'" style="width:33.3%">Mon activite</button>
+        <button type="button" onclick="window.location.href='/events/compte'" style="width:33.3%">Mon compte</button>
     </div>
     <script type="text/javascript" th:inline="javascript">
     

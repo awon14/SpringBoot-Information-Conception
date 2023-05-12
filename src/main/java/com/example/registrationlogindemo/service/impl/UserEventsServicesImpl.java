@@ -3,6 +3,7 @@ package com.example.registrationlogindemo.service.impl;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 // import java.util.stream.Collectors;
 import java.util.stream.Collectors;
 
@@ -35,11 +36,30 @@ public class UserEventsServicesImpl implements EventsService {
             LocalDateTime endDateTime = LocalDateTime.parse(eventDto.getEnd(), DateTimeFormatter.ISO_DATE_TIME);
             User user = userService.findById(eventDto.getUser());
             UserEvents event = new UserEvents();
+            event.setId(eventDto.getId());
             event.setStartDateTime(startDateTime);
             event.setEndDateTime(endDateTime);
             event.setTitle(eventDto.getTitle());
             event.setColor(eventDto.getColor());
             event.setUser(user);
+            eventsRepository.save(event);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    
+        
+    public Boolean updateEvent(UserEventsDto eventDto) {
+        try {
+            
+            
+            UserEvents event = findById(eventDto.getId());
+            
+            event.setSecondsWatched(eventDto.getSecondsWatched());
+            event.setEventStartDateTime(LocalDateTime.now());
+            
             eventsRepository.save(event);
             return true;
         } catch (Exception e) {
@@ -55,10 +75,7 @@ public class UserEventsServicesImpl implements EventsService {
         
     }
     
-    // public List<UserEvents> findAllEvents(User user) {
-    //     List<UserEvents> events = eventsRepository.findByUsers(user);
-    //     return events;
-    // }
+    
     @Override
     public List<UserEventsDto> findAllEvents() {
         // TODO Auto-generated method stub
@@ -76,23 +93,40 @@ public class UserEventsServicesImpl implements EventsService {
     private UserEventsDto convertEntityToDto(UserEvents event) {
         UserEventsDto userDto = new UserEventsDto();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatterTwo = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter formatterThree = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String startDateTimeString = event.getStartDateTime().format(formatter);
         String endDateTimeString = event.getEndDateTime().format(formatter);
+        String dateWatched = (event.getEventStartDateTime() == null) ? "-" :event.getEventStartDateTime().format(formatterThree);
+        String eventStartDateTime = (event.getEventStartDateTime() == null) ? "-" :event.getEventStartDateTime().format(formatter);
+        String eventEndDateTime = (event.getEventEndDateTime() == null) ? "-" :event.getEventEndDateTime().format(formatter);
+        String EventTimeWatched = (event.getEventStartDateTime() == null) ? "00:00" :event.getEventStartDateTime().format(formatterTwo);
+        String EventFinishedTimeWatched = (event.getEventEndDateTime() == null) ? "00.00" :event.getEventEndDateTime().format(formatterTwo);
+        Float seconds = (event.getSecondsWatched() == null) ? 0 : event.getSecondsWatched();
         userDto.setColor(event.getColor());
         userDto.setTitle(event.getTitle());
         userDto.setId(event.getId());
         userDto.setStart(startDateTimeString);
         userDto.setEnd(endDateTimeString);
+        userDto.setEventStartDateTime(eventStartDateTime);
+        userDto.setEventEndDateTime(eventEndDateTime);
+        userDto.setEventTimeWatched(EventTimeWatched);
+        userDto.setEventFinishedTimeWatched(EventFinishedTimeWatched);
+        userDto.setSecondsWatched(seconds);
+        userDto.setDateWatched(dateWatched);
+        userDto.setUser(event.getUser().getId());
+        userDto.setId(event.getId());
         return userDto;
     }
 
-    // private UserEventsDto convertEntityToDto(List<UserEvents> events){
-    //     UserEventsDto eventDto = new UserEventsDto();
-    //     eventDto.getTitle();
-    //     eventDto.getId();
-    //     eventDto.getColor();
-    //     // eventDto.setLastName(name[1]);
-    //     // eventDto.setEmail(user.getEmail());
-    //     return eventDto;
-    // }
+    @Override
+    public UserEvents findById(Long id) {       
+        Optional<UserEvents> userEventsOptional = eventsRepository.findById(id);
+        if (userEventsOptional.isPresent()) {
+            return userEventsOptional.get();
+        } else {
+            // handle the case where the UserEvents object with the given id is not found
+            return null;
+        }
+    }
 }

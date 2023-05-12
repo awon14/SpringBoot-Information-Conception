@@ -30,6 +30,19 @@ public class UserEvents {
     
     @Column(name = "endDateTime", nullable = true)
     private LocalDateTime endDateTime;
+
+
+    @Column(name = "eventStartDateTime", nullable = true)
+    private LocalDateTime eventStartDateTime;
+
+    @Column(name = "secondsWatched", nullable = true)
+    private Float secondsWatched;
+
+    @Column(name = "eventEndDateTime", nullable = true)
+    private LocalDateTime eventEndDateTime;
+
+    @Column(name = "note", nullable = true)
+    private String note;
     
     @Column(name = "title", nullable = false)
     private String title;

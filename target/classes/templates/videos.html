@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>
+        Activites Schedule
+    </title>
+
+    
+ 
+
+
+    <style type="text/css">
+table, th, td {
+  border:none;
+  text-align: left;
+}
+tr{
+align:left
+}
+.btn-group{
+   position: fixed;
+    bottom: 0;
+    width: 100%;
+
+}
+.btn-group button {
+  background-color: #ffffff; /* White background */
+  border: 1px solid #000000; /* Green border */
+  color: #000000; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #f56d05;
+  color:#000000;
+}
+    </style>
+
+</head>
+
+<body>
+    
+    <h1 align="center">Tableau</h1>
+
+<div class="container">
+    <div class="row videoClass" th:each="event : ${eventsJson}">
+        <h3 align="center" th:text="${event.title}"></h3>
+        <video th:attr="id=${event.id}" width="100%" controls>
+            <source  src="../static/assets/videos/stock-footage-close-up-of-athletic-young-female-exercising-stretching-and-doing-yoga-in-the-morning-in-her.webm" type="video/webm">
+            <source src="mov_bbb.ogg" type="video/ogg">
+            Your browser does not support HTML video.
+        </video>
+
+        <hr>
+        
+    </div>
+</div>
+
+    <br>
+   
+    <br>
+    <div class="btn-group" style="width:100%;z-index: 1000;">
+        <button type="button" onclick="window.location.href='/events/myevents'" style="width:33.3%">Mon agenda</button>
+        <button type="button" onclick="window.location.href='/events/activities'" style="width:33.3%">Mon activite</button>
+        <button type="button" onclick="window.location.href='/events/compte'" style="width:33.3%">Mon compte</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+    // retrieve the events JSON string from the model
+  
+  
+    // // parse the JSON string and display the events on your page
+    // var user_events = JSON.parse(eventsJson);
+    // console.log(user_events);
+    //onclick get video id
+    // $('.videoClass video').click(function() { 
+    // var id = $(this).attr('id');
+    // console.log(id);
+    // // const video = document.getElementById(id);
+
+    // // video.addEventListener("play", function() {
+    // //     console.log("The video is now playing");
+    // // });
+    // });
+    // get all video elements
+    const videos = document.querySelectorAll("video");
+
+    // loop through all videos and add event listeners
+    videos.forEach(function(video) {
+    video.addEventListener("play", function() {
+        console.log(`Video ${video.id} is playing`);
+    });
+
+    video.addEventListener("pause", function() {
+        
+        const currentTime = video.currentTime;
+        console.log(`Paused at ${currentTime} seconds`);
+        let event_id = video.id;
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/api/v1/updateEvent", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+            } else {
+                console.error(xhr.statusText);
+            }
+            }
+        };
+        const data = JSON.stringify({id:event_id, secondsWatched: currentTime });
+        xhr.send(data);
+    });
+
+    video.addEventListener("ended", function() {
+        console.log(`Video ${video.id} has ended`);
+    });
+    });
+
+//     const video = document.getElementById("myVideo");
+
+// video.addEventListener("play", function() {
+//   console.log("The video is now playing");
+// });
+
+// video.addEventListener("pause", function() {
+//   console.log("The video has been paused");
+ 
+// });
+
+// video.addEventListener("loadedmetadata", function() {
+//   console.log("The video duration is " + video.duration + " seconds");
+// });
+
+// video.addEventListener("timeupdate", function() {
+//   console.log("The current time is " + video.currentTime + " seconds");
+// });
+
+
+
+    </script>
+
+</body>
+
+</html>

@@ -4,7 +4,7 @@ import lombok.*;
 
 // import java.time.LocalDateTime;
 
-import com.example.registrationlogindemo.entity.User;
+// import com.example.registrationlogindemo.entity.User;
 
 import jakarta.validation.constraints.NotEmpty;
 
@@ -27,5 +27,17 @@ public class UserEventsDto {
     private String color;
 
     private Long user;
+
+    private String eventEndDateTime;
+
+    private Float secondsWatched;
+    
+    private String eventStartDateTime;
+
+    private String eventTimeWatched;
+
+    private String eventFinishedTimeWatched;
+
+    private String dateWatched;
 
 }

@@ -32,4 +32,16 @@ public class OpenInterfaceController {
             return "No Event Saved!";
         }
 	}
+
+
+    @PostMapping(value ="/updateEvent",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String updateEvent(@RequestBody UserEventsDto event){
+        
+		Boolean is_event_saved = eventsService.updateEvent(event);
+        if(is_event_saved){
+            return "Event Saved!";
+        }else{
+            return "No Event Saved!";
+        }
+	}
 }

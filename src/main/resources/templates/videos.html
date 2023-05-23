@@ -15,6 +15,10 @@
 
 
     <style type="text/css">
+        body{
+            margin:0px;
+
+        }
 table, th, td {
   border:none;
   text-align: left;
@@ -53,13 +57,17 @@ align:left
   background-color: #f56d05;
   color:#000000;
 }
+.active{
+    background-color: #f56d05 !important;;
+
+}
     </style>
 
 </head>
 
 <body>
     
-    <h1 align="center">Tableau</h1>
+    <h1 align="center">Votre Programme</h1>
 
 <div class="container">
     <div class="row videoClass" th:each="event : ${eventsJson}">
@@ -81,27 +89,11 @@ align:left
     <div class="btn-group" style="width:100%;z-index: 1000;">
         <button type="button" onclick="window.location.href='/events/myevents'" style="width:33.3%">Mon agenda</button>
         <button type="button" onclick="window.location.href='/events/activities'" style="width:33.3%">Mon activite</button>
-        <button type="button" onclick="window.location.href='/events/compte'" style="width:33.3%">Mon compte</button>
+        <button class="active" type="button" onclick="window.location.href='/events/compte'" style="width:33.4%">Mon compte</button>
     </div>
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" th:inline="javascript">
-    // retrieve the events JSON string from the model
-  
-  
-    // // parse the JSON string and display the events on your page
-    // var user_events = JSON.parse(eventsJson);
-    // console.log(user_events);
-    //onclick get video id
-    // $('.videoClass video').click(function() { 
-    // var id = $(this).attr('id');
-    // console.log(id);
-    // // const video = document.getElementById(id);
-
-    // // video.addEventListener("play", function() {
-    // //     console.log("The video is now playing");
-    // // });
-    // });
-    // get all video elements
+    
     const videos = document.querySelectorAll("video");
 
     // loop through all videos and add event listeners

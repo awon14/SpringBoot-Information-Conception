@@ -14,17 +14,17 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="events")
-public class UserEvents {
+@Table(name="subevents")
+public class SubEvents {
     @Id
     @SequenceGenerator(
-        name = "user_event_sequence",
-        sequenceName = "user_event_sequence",
+        name = "sub_event_sequence",
+        sequenceName = "sub_event_sequence",
         allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.IDENTITY,
-            generator = "user_event_sequence"
+            generator = "sub_event_sequence"
     )
     private Long id;
     @Column(name = "startDateTime", nullable = false)
@@ -46,6 +46,9 @@ public class UserEvents {
     @Column(name = "note", nullable = true)
     private String note;
     
+    @Column(name = "url", nullable = true)
+    private String url;
+
     @Column(name = "title", nullable = false)
     private String title;
     
@@ -53,12 +56,10 @@ public class UserEvents {
     private String color;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "event_id")
+    private UserEvents event;
    
-    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<SubEvents> userEvents = new ArrayList<>();
-    
+
     public String getTitle() {
         return this.title;
     }
@@ -67,8 +68,7 @@ public class UserEvents {
         this.title = title;
     }
 
-    public UserEvents getEvents() {
+    public SubEvents getEvents() {
         return this;
     }
-
 }
